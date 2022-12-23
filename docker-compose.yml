@@ -1,0 +1,19 @@
+version: '3.10'
+
+services:
+  postgres:
+    image: postgres
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+      - /var/opt/pgbackups:/backups
+    env_file: .env
+    expose:
+      - 5432
+
+  app:
+    container_name: gui_app
+    build: .
+    depends_on:
+      - postgres
+volumes:
+  postgres_data:
